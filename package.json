@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "M01T01": "nodemon src/module01/task01-stdin-stdout.ts"
   },
   "author": "",
   "license": "ISC",
