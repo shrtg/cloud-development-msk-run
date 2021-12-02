@@ -72,9 +72,25 @@ const writeToDbStream = new stream.Transform({
 const writeToFileStream = fs.createWriteStream(OUTPUT_TXT_FILE_PATH)
     .on('error', createErrorLogger('WRITE TO FILE ERROR'));
 
-fileReadStream
-    .pipe(csvParseStream)
-    .pipe(writeToDbStream)
-    .pipe(writeToFileStream)
-    .on('error', createErrorLogger('UNHANDLED ERROR'))
-    .on('finish', () => console.log('FINISHED SUCCESSFULLY'));
+// fileReadStream
+//     .pipe(csvParseStream)
+//     .pipe(writeToDbStream)
+//     .pipe(writeToFileStream)
+//     .on('error', createErrorLogger('UNHANDLED ERROR'))
+//     .on('finish', () => console.log('FINISHED SUCCESSFULLY'));
+
+stream.pipeline(
+    fileReadStream,
+    csvParseStream,
+    writeToDbStream,
+    writeToFileStream,
+    (error) => {
+        if (error) {
+            console.error('UNHANDLED ERROR', error);
+        } else {
+            console.log('SUCCESS');
+        }
+    }
+).on('error', (error) => {
+    console.log('PIPELINE ERROR', error);
+})
